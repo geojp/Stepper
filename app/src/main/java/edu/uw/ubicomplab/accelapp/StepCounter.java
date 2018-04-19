@@ -2,6 +2,7 @@ package edu.uw.ubicomplab.accelapp;
 
 import android.net.sip.SipSession;
 import android.util.EventLog;
+import android.widget.EditText;
 
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -18,6 +19,7 @@ public class StepCounter {
     private double[] xv = new double[NZEROS+1];
     private double[] yv = new double[NPOLES+1];
 
+
     private int windowSize = 500;
     private int numPts = 0;
     private DescriptiveStatistics accelWindow = new DescriptiveStatistics(windowSize);
@@ -25,8 +27,8 @@ public class StepCounter {
 
     private boolean upFound = false;
 
-    private double threshHi = 80.0;
-    private double threshLo = -60.0;
+    private double threshHi = 80;
+    private double threshLo = -60;
 
     private StepEventListener stepListener;
 
@@ -61,6 +63,10 @@ public class StepCounter {
         return yv[2] - 1000;
     }
 
+    public void updateThresh(double hi, double lo) {
+        threshHi = hi;
+        threshLo = lo;
+    }
 
     private void processData(double val) {
         if (!upFound) {

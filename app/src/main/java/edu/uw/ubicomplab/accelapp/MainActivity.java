@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final EditText etMax = findViewById(R.id.eTMax);
+        EditText etMin = findViewById(R.id.eTMin);
 
         // init step counter
         stepCounter = new StepCounter(new StepCounter.StepEventListener() {
@@ -61,6 +65,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View view) {
                 stepCounter.reset();
+            }
+        });
+
+        Button btnSet = findViewById(R.id.bSet);
+        btnSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double hi = Double.parseDouble(etMax.getText().toString());
+                double lo = Double.parseDouble(etMax.getText().toString());
+                stepCounter.updateThresh(hi,lo);
             }
         });
     }
