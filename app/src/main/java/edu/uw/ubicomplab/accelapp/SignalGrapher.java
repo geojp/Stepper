@@ -16,7 +16,7 @@ public class SignalGrapher {
     private LineGraphSeries<DataPoint> timeAccelX = new LineGraphSeries<>();
     private GraphView graph;
     private static final int GRAPH_X_BOUNDS = 500; // Adjust to show more points on graph
-    private static final int GRAPH_Y_BOUNDS = 1000;
+    private static final int GRAPH_Y_BOUNDS = 400;
     private int graphColor[] = {Color.argb(255,244,170,50),
             Color.argb(255, 60, 175, 240),
             Color.argb(225, 50, 220, 100)};

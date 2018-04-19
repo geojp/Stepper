@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 public class StepCounter {
     private final int NZEROS = 2;
     private final int NPOLES = 2;
-    private final double GAIN = 1.804169259;
+    private final double GAIN = 1.465674116;
     private double[] xv = new double[NZEROS+1];
     private double[] yv = new double[NPOLES+1];
 
@@ -55,12 +55,12 @@ public class StepCounter {
 
     private double lowPass(double in)
     {
-        xv[0] = xv[1]; xv[1] = xv[2];
-        xv[2] = in / GAIN;
-        yv[0] = yv[1]; yv[1] = yv[2];
-        yv[2] =   (xv[0] + xv[2]) + 2 * xv[1]
-                + ( -0.8008026467 * yv[0]) + (  1.7786317778 * yv[1]);
-        return yv[2] - 1000;
+        xv[0] = xv[1];
+        xv[1] = in / GAIN;
+        yv[0] = yv[1];
+        yv[1] =   (xv[0] + xv[1])
+                + (  0.9690674172 * yv[0]);
+        return yv[1] - 400;
     }
 
     public void updateThresh(double hi, double lo) {
