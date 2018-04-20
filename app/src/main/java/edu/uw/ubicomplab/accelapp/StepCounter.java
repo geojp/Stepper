@@ -28,7 +28,10 @@ public class StepCounter {
     private boolean upFound = false;
 
     private double threshHi = 80;
-    private double threshLo = -60;
+    private double threshLo = -20;
+
+    private int SKIP = 20;
+    private int skipedSamples = SKIP;
 
     private StepEventListener stepListener;
 
@@ -63,23 +66,30 @@ public class StepCounter {
         return yv[1] - 400;
     }
 
-    public void updateThresh(double hi, double lo) {
+    public void updateThreshSkip(double hi, double lo, int skip) {
         threshHi = hi;
         threshLo = lo;
+        SKIP = skip;
     }
 
     private void processData(double val) {
-        if (!upFound) {
-            if (val > threshHi) {
-                upFound = true;
+        if (skipedSamples >= SKIP) {
+            if (!upFound) {
+                if (val > threshHi) {
+                    upFound = true;
+                }
+            } else {
+                if (val < threshLo) {
+                    stepCount += 1;
+                    upFound = false;
+                    stepListener.onStep(stepCount);
+                    skipedSamples = 0;
+                }
             }
         }
-        else {
-            if (val < threshLo) {
-                stepCount += 1;
-                upFound = false;
-                stepListener.onStep(stepCount);
-            }
+        else
+        {
+            skipedSamples++;
         }
     }
 

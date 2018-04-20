@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
 
         final EditText etMax = findViewById(R.id.eTMax);
-        EditText etMin = findViewById(R.id.eTMin);
+        final EditText etMin = findViewById(R.id.eTMin);
+        final EditText etSkip = findViewById(R.id.eTSkip);
 
         // init step counter
         stepCounter = new StepCounter(new StepCounter.StepEventListener() {
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
                 double hi = Double.parseDouble(etMax.getText().toString());
                 double lo = Double.parseDouble(etMax.getText().toString());
-                stepCounter.updateThresh(hi,lo);
+                int skip = Integer.parseInt(etSkip.getText().toString());
+                stepCounter.updateThreshSkip(hi,lo,skip);
             }
         });
     }
